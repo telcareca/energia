@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: contadeluz
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run render:build
+    startCommand: npm run render:start
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: DATABASE_URL
+        value: file:./data/custom.db
+      - key: HUBPAGUE_TOKEN
+        sync: false
