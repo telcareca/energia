@@ -1,14 +1,18 @@
 services:
   - type: web
-    name: contadeluz
+    name: economia-energy
     runtime: node
     plan: free
-    buildCommand: npm install && npm run render:build
-    startCommand: npm run render:start
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
     envVars:
-      - key: NODE_VERSION
-        value: 22
+      - key: NODE_ENV
+        value: production
       - key: DATABASE_URL
-        value: file:./data/custom.db
+        value: file:./db/custom.db
       - key: HUBPAGUE_TOKEN
         sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: PORT
+        value: 10000

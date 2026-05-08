@@ -291,6 +291,15 @@ export default function Home() {
   const [error, setError] = useState<string>('')
   const [pixData, setPixData] = useState<PixData | null>(null)
   const [pixCopied, setPixCopied] = useState(false)
+
+  // Track visit on page load
+  useEffect(() => {
+    fetch('/api/visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: 'home' }),
+    }).catch(() => {})
+  }, [])
   const [pollingPayment, setPollingPayment] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -1052,7 +1061,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  Continuar para Pagamento
+                  Continuar para Contrato
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </>
               )}
