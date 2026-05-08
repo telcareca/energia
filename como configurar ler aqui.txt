@@ -1,0 +1,5 @@
+DATABASE_URL = file:./db/custom.db
+HUBPAGUE_TOKEN = KYJlscQgoBfwTdacpXB8XxzeEWGogkjk5Vf80kvl
+Se quiser, pode adicionar uma terceira para o SEO funcionar com a URL correta:
+
+SITE_URL = https://sua-url-real.onrender.com (a URL que a Render te der)
