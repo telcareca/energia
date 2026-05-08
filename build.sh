@@ -1,25 +1,18 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
+set -e
 
-echo "=== Render Build Script: Conta de Luz ==="
+echo "=== Render Build Script ==="
 
-# A Render precisa de DATABASE_URL durante os comandos do Prisma.
-# Se você configurar uma variável DATABASE_URL na Render, ela será respeitada.
-# Caso contrário, será usado um SQLite local dentro do projeto.
-export DATABASE_URL="${DATABASE_URL:-file:./data/custom.db}"
+# Create data directory for SQLite
+mkdir -p /opt/render/project/src/data
 
-if [[ "$DATABASE_URL" == file:* ]]; then
-  DB_PATH="${DATABASE_URL#file:}"
-  mkdir -p "$(dirname "$DB_PATH")"
-fi
-
-echo "Gerando Prisma Client..."
+# Generate Prisma client
 npx prisma generate
 
-echo "Sincronizando schema do banco..."
+# Push database schema (creates the SQLite file)
 npx prisma db push
 
-echo "Compilando Next.js em modo standalone..."
-npm run build:next
+# Build Next.js
+npm run build
 
-echo "=== Build concluído com sucesso ==="
+echo "=== Build Complete ==="

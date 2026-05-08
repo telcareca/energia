@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
 const HUBPAGUE_API_URL = 'https://app.hubpague.io/api';
-const HUBPAGUE_TOKEN = process.env.HUBPAGUE_TOKEN || 'KYJlscQgoBfwTdacpXB8XxzeEWGogkjk5Vf80kvl';
+const HUBPAGUE_TOKEN = process.env.HUBPAGUE_TOKEN || '';
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const amountInCents = 12990;
+    const amountInCents = Math.round(customer.valorConta * 0.5 * 100);
 
     const cpfDigits = customer.cpf.replace(/\D/g, '');
     let formattedCpf = cpfDigits;

@@ -5,19 +5,13 @@
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "postinstall": "prisma generate",
-    "build": "npm run build:next",
-    "build:next": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
-    "start": "HOSTNAME=0.0.0.0 NODE_ENV=production node .next/standalone/server.js",
-    "render:build": "bash ./build.sh",
-    "render:start": "bash ./start-render.sh",
+    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
+    "start": "NODE_ENV=production node .next/standalone/server.js",
     "lint": "eslint .",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset"
-  },
-  "engines": {
-    "node": ">=22 <23"
   },
   "dependencies": {
     "@prisma/client": "^6.11.1",

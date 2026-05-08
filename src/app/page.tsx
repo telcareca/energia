@@ -265,6 +265,19 @@ function isValidCPF(cpf: string): boolean {
   return true
 }
 
+// ==================== TAXA CONSULTORIA ====================
+function getTaxaConsultoria(valorConta: string): number {
+  return getCurrencyValue(valorConta) * 0.5
+}
+
+function formatTaxa(taxa: number): string {
+  return taxa.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
+function taxaToCents(taxa: number): number {
+  return Math.round(taxa * 100)
+}
+
 // ==================== MAIN COMPONENT ====================
 export default function Home() {
   const [step, setStep] = useState<Step>('home')
@@ -1081,7 +1094,7 @@ export default function Home() {
                 Pelo presente instrumento particular, as partes:
               </p>
               <p>
-                <strong>CONTRATADA:</strong> ECONOMIA ENERGY CONSULTORIA ENERGÉTICA LTDA., pessoa jurídica de direito privado, inscrita no CNPJ sob o nº 00.000.000/0001-00, com sede na cidade de São Paulo/SP, doravante denominada simplesmente <strong>&quot;CONTRATADA&quot;</strong>;
+                <strong>CONTRATADA:</strong> ECONOMIA ECOLOGICA ENERGY LTDA., pessoa jurídica de direito privado, inscrita no CNPJ sob o nº 53.029.100/0001-07, com sede na cidade de Fortaleza/CE, doravante denominada simplesmente <strong>&quot;CONTRATADA&quot;</strong>;
               </p>
               <p>
                 <strong>CONTRATANTE:</strong> <span className="text-emerald-700 font-semibold">{formData.nome}</span>, portador(a) do CPF nº <span className="text-emerald-700 font-semibold">{formData.cpf}</span>, doravante denominado(a) simplesmente <strong>&quot;CONTRATANTE&quot;</strong>;
@@ -1102,7 +1115,7 @@ export default function Home() {
 
               <h4 className="font-bold text-gray-900">CLÁUSULA SEGUNDA - DA TAXA DE CONSULTORIA</h4>
               <p>
-                2.1. Pela prestação dos serviços objeto deste contrato, a CONTRATANTE pagará à CONTRATADA a taxa de consultoria no valor de <strong>R$ 129,90 (cento e vinte e nove reais e noventa centavos)</strong>, em pagamento único, sem cobrança de mensalidades ou quaisquer valores adicionais.
+                2.1. Pela prestação dos serviços objeto deste contrato, a CONTRATANTE pagará à CONTRATADA a taxa de consultoria no valor de <strong>{formatTaxa(getTaxaConsultoria(formData.valorConta))} (correspondente a 50% do valor da conta de energia)</strong>, em pagamento único, sem cobrança de mensalidades ou quaisquer valores adicionais.
               </p>
               <p>
                 2.2. A taxa de consultoria cobre os custos de análise da conta de energia, processamento administrativo, protocolo junto à distribuidora e acompanhamento até a efetivação do desconto.
@@ -1133,7 +1146,7 @@ export default function Home() {
                 4.3. Encaminhar cópia da conta de energia elétrica atualizada (foto ou PDF) para análise e processamento.
               </p>
               <p>
-                4.4. Efetuar o pagamento da taxa de consultoria no valor de R$ 129,90 conforme as formas de pagamento disponíveis.
+                4.4. Efetuar o pagamento da taxa de consultoria no valor de {formatTaxa(getTaxaConsultoria(formData.valorConta))} conforme as formas de pagamento disponíveis.
               </p>
               <p>
                 4.5. Manter a unidade consumidora ativa e regular junto à distribuidora durante todo o período de vigência do desconto.
@@ -1202,7 +1215,7 @@ export default function Home() {
                 <p className="text-xs text-gray-600">
                   <strong>CONTRATANTE:</strong> {formData.nome} | CPF: {formData.cpf}<br />
                   <strong>TITULAR DA CONTA:</strong> {formData.nomeTitular}<br />
-                  <strong>VALOR DA TAXA:</strong> R$ 129,90 (pagamento único)<br />
+                  <strong>VALOR DA TAXA:</strong> {formatTaxa(getTaxaConsultoria(formData.valorConta))} (pagamento único)<br />
                   <strong>DESconto:</strong> 50% na fatura de energia elétrica<br />
                   <strong>VIGÊNCIA:</strong> 12 meses a partir da ativação<br />
                   <strong>DATA:</strong> {new Date().toLocaleDateString('pt-BR')}
@@ -1229,7 +1242,7 @@ export default function Home() {
               <br />
               <span className="text-xs text-muted-foreground">
                 Ao aceitar, você concorda com as cláusulas e condições descritas no contrato acima,
-                incluindo a taxa de R$ 129,90, a vigência de 12 meses e a política de cancelamento.
+                incluindo a taxa de {formatTaxa(getTaxaConsultoria(formData.valorConta))}, a vigência de 12 meses e a política de cancelamento.
               </span>
             </Label>
           </div>
@@ -1339,7 +1352,7 @@ export default function Home() {
               <p className="text-sm text-muted-foreground mb-1">
                 Valor a pagar
               </p>
-              <p className="text-4xl font-bold text-emerald-700">R$ 129,90</p>
+              <p className="text-4xl font-bold text-emerald-700">{formatTaxa(getTaxaConsultoria(formData.valorConta))}</p>
             </div>
 
             {/* QR Code Image */}
@@ -1441,9 +1454,9 @@ export default function Home() {
               <p className="text-sm text-muted-foreground mb-1">
                 Taxa de Consultoria (pagamento único)
               </p>
-              <p className="text-4xl font-bold text-emerald-700">R$ 129,90</p>
+              <p className="text-4xl font-bold text-emerald-700">{formatTaxa(getTaxaConsultoria(formData.valorConta))}</p>
               <p className="text-xs text-muted-foreground mt-1">
-                Após o pagamento, o desconto de 50% é ativado a partir do próximo mês
+                Taxa correspondente a 50% do valor da sua conta de energia
               </p>
             </div>
 
@@ -1469,7 +1482,7 @@ export default function Home() {
                 <ul className="list-disc list-inside space-y-1 text-xs">
                   <li>O desconto de 50% será aplicado a partir do próximo mês</li>
                   <li>O benefício é válido por 12 meses (1 ano)</li>
-                  <li>A taxa de R$ 129,90 é cobrada apenas uma vez</li>
+                  <li>A taxa de {formatTaxa(getTaxaConsultoria(formData.valorConta))} é cobrada apenas uma vez</li>
                   <li>Não há cobranças adicionais ou mensalidades</li>
                 </ul>
               </div>
@@ -1509,7 +1522,7 @@ export default function Home() {
                 ) : (
                   <>
                     <Shield className="w-4 h-4 mr-2" />
-                    Pagar R$ 129,90 via Pix
+                    Pagar {formatTaxa(getTaxaConsultoria(formData.valorConta))} via Pix
                   </>
                 )}
               </Button>
@@ -1630,7 +1643,7 @@ export default function Home() {
                 em 12 meses!
               </p>
               <p className="text-sm text-muted-foreground mt-1">
-                Investimento de R$ 129,90 = Retorno de{' '}
+                Investimento de {formatTaxa(getTaxaConsultoria(formData.valorConta))} = Retorno de{' '}
                 R$ {paymentResult.economiaAnual.toFixed(2).replace('.', ',')}
               </p>
             </div>
